@@ -1,0 +1,29 @@
+<style type="text/css">
+.select2-no-search-field .select2-search {
+	display:none;
+}
+</style>
+
+<script type="text/javascript">
+$(function()
+{
+	$('#version-select')
+		.select2({
+			containerCss     : {padding : '7px 10px'},
+			dropdownCssClass : 'select2-no-search-field'
+		})
+		.on('select2-selecting', function(e)
+		{
+			var baseUrl = '<?=$this->url->getApiUrl(isset($name) ? $name : '', null, '{VERSION}')?>';
+			window.location.href = baseUrl.replace('{VERSION}', e.val);
+		});
+});
+</script>
+
+<?=$this->tag->select([
+	'version',
+	$allVersions,
+	'using' => ['version', 'version'],
+	'value' => $version,
+	'id'    => 'version-select',
+]);?>

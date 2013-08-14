@@ -1,0 +1,54 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var stdClass $tree
+ */
+?>
+<p class="list-selector">
+	<span class="button green" data-list-id="classes-list-tree-ul">As a tree</span>
+	<span class="button" data-list-id="classes-list-plain-ul">Plain list</span>
+</p>
+
+<ul id="classes-list-tree-ul" class="classes-list-tree">
+	<?php
+	foreach($tree->list as $class => $type)
+	{
+		if($type != 'class' || (isset($tree->inheritance[$class]) && substr($tree->inheritance[$class], 0, 8) == 'Phalcon\\')) continue;
+		$this->view->partial('classes-list-item', [
+			'class'          => $class,
+			'implementation' => true,
+			'inheritance'    => false,
+			'children'       => true
+		]);
+	}
+	?>
+</ul>
+
+<ul id="classes-list-plain-ul" class="classes-list-tree" style="display:none">
+	<?php
+	foreach($tree->list as $class => $type)
+	{
+		if($type != 'class') continue;
+		$this->view->partial('classes-list-item', [
+			'class'          => $class,
+			'implementation' => true,
+			'inheritance'    => true,
+			'children'       => false
+		]);
+	}
+	?>
+</ul>
+
+<script type="text/javascript">
+$(function()
+{
+	$('.list-selector SPAN').on('click', function()
+	{
+		$(this).parent().find('SPAN').removeClass('green');
+		$(this).addClass('green');
+		$('.classes-list-tree').hide();
+		$(document.getElementById($(this).data('list-id'))).show();
+	});
+});
+</script>

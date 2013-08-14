@@ -1,0 +1,67 @@
+<?php
+$synopsis = '<span class="src-modifier">';
+
+if($method->is_final)
+{
+	$synopsis .= 'final ';
+}
+
+if($method->is_abstract)
+{
+	$synopsis .= 'abstract ';
+}
+
+$synopsis .= $method->visibility;
+
+if($method->is_static)
+{
+	$synopsis .= ' static';
+}
+
+$synopsis .= '</span>';
+
+if($method->returns)
+{
+	$synopsis .= $this->filter->sanitize(" <span class=\"src-type\">$method->returns</span>", 'apiLinks');
+}
+
+
+$href = "#{$method->name}-details";
+if($method->defined_by != $name)
+{
+	$href = $this->url->getApiUrl($method->defined_by) . $href;
+}
+
+if($useLink)
+	$synopsis .= " <strong class=\"src-name\"><a href=\"$href\">$method->name</a></strong> (";
+else
+	$synopsis .= " <strong class=\"src-name\">$method->name</strong> (";
+
+$args = [];
+foreach($method->getArguments(['order'=>'ordering']) as $arg)
+{
+	$argDef = '';
+	if($arg->type)
+	{
+		$argDef .= $this->filter->sanitize("<span class=\"src-type\">$arg->type</span> ", 'apiLinks');
+	}
+	$argDef .= "<var>\$$arg->name</var>";
+	if($arg->is_optional)
+	{
+		$argDef .= '=<span class="src-type">'.($arg->default_value ?: '?').'</span>';
+	}
+	$args[] = $argDef;
+}
+
+if(empty($args))
+{
+	$args[] = '<span class="src-type">void</span>';
+}
+
+$synopsis .= join(', ', $args).');';
+
+?>
+
+<div class="method-synopsis">
+	<?=$synopsis?>
+</div>

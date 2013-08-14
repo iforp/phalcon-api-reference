@@ -1,0 +1,12 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var stdClass $tree
+ */
+?>
+<ul class="classes-list-tree">
+	<?php foreach($tree->structure as $ns => $obj) { ?>
+	<li><?=$this->tag->linkToApi($ns)?></li>
+	<?php } ?>
+</ul>

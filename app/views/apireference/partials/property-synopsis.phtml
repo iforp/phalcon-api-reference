@@ -1,0 +1,31 @@
+<?php
+$synopsis = "<span class=\"src-modifier\">$property->visibility";
+
+if($property->is_static)
+{
+	$synopsis.= ' static';
+}
+
+$synopsis .= '</span> ';
+
+if($property->type)
+{
+	$synopsis .= $this->filter->sanitize("<span class=\"src-type\">$property->type</span> ", 'apiLinks');
+}
+
+$href = "#\${$property->name}-details";
+if($property->defined_by != $name)
+{
+	$href = $this->url->getApiUrl($property->defined_by) . $href;
+}
+
+if($useLink)
+	$synopsis .= "<var><a href=\"$href\">\$$property->name</a></var>;";
+else
+	$synopsis .= "<var>\$$property->name</var>;";
+
+?>
+
+<div class="property-synopsis">
+	<?=$synopsis?>
+</div>

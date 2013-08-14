@@ -1,0 +1,61 @@
+<?php
+$synopsis = "<span>";
+if($method->is_final)    $synopsis .= 'final ';
+if($method->is_abstract) $synopsis .= 'abstract ';
+$synopsis .= $method->visibility;
+if($method->is_static)   $synopsis .= ' static';
+$synopsis .= '</span>';
+if($method->returns)     $synopsis .= $this->filter->sanitize(" <span>$method->returns</span>", 'apiLinks');
+$synopsis .= " <strong>$method->name</strong>(";
+
+// @todo add ordering
+$args = [];
+foreach($method->arguments as $arg)
+{
+	$argDef = '';
+	if($arg->type) $argDef .= $this->filter->sanitize("<span>$arg->type</span> ", 'apiLinks');
+	$argDef .= "<var>\$$arg->name</var>";
+	if($arg->is_optional) $argDef .= '=<span>'.($arg->default_value ?: '?').'</span>';
+	$args[] = $argDef;
+}
+$synopsis .= join(', ', $args).');';
+?>
+<div id="<?=$method->name?>-details">
+	<div class="content-header">
+		<small class="gray">method</small>
+		<h3><?=$method->name?></h3>
+	</div>
+
+	<table>
+		<tr>
+			<td colspan="3">
+				<code><?=$synopsis?></code>
+			</td>
+		</tr>
+		<?php foreach($method->arguments as $arg) { ?>
+		<tr>
+			<th>$<?=$arg->name?></th>
+			<td><?=$this->filter->sanitize($arg->type, 'apiLinks')?></td>
+			<td><?=$arg->description?></td>
+		</tr>
+		<?php } ?>
+		<?php if($method->returns) { ?>
+		<tr>
+			<th>returns</th>
+			<td colspan="2"><?=$method->returns?></td>
+		</tr>
+		<?php } ?>
+	</table>
+
+	<?php if($method->docs) { ?>
+		<?=$this->filter->sanitize($method->docs, ['docs', 'apiLinks'])?>
+	<?php } ?>
+
+	<?php if($method->example) { ?>
+		<p><?=$this->tag->code($method->example)?></p>
+	<?php } ?>
+
+	<?php if($method->line) { ?>
+		<p><?=$this->tag->linkToGit([$class->file, 'Source on GitHub'], $version, $method->line)?></p>
+	<?php } ?>
+</div>

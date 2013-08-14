@@ -1,0 +1,20 @@
+<div id="quick-search">
+	<input type="hidden" style="width:250px" />
+</div>
+
+<script type="text/javascript">
+$(function()
+{
+	$('#quick-search INPUT')
+		.select2({
+			data                 : <?=json_encode(array_map(function($item){return ['id'=>str_replace('\\', '/', $item), 'text'=>$item];}, array_keys($tree->list)))?>,
+			placeholder          : 'Quick search',
+			dropdownAutoWidth    : true
+		})
+		.on('select2-selecting', function(e)
+		{
+			var baseUrl = '<?=$this->url->getApiUrl('{CLASS}')?>';
+			window.location.href = baseUrl.replace('{CLASS}', e.val);
+		});
+});
+</script>

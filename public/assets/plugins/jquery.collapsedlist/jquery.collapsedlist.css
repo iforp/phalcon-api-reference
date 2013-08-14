@@ -1,0 +1,25 @@
+.collapsed-list,
+.collapsed-list UL {
+	list-style: none;
+	padding: 0 0 0 18px;
+	margin: 0;
+}
+.collapsed-list LI {
+	padding: 0;
+	margin: 0;
+}
+.collapsed-list A:hover {
+	text-decoration: underline;
+}
+
+.collapsed-list .cl-toggler {
+	cursor:pointer;
+	margin-left: -19px;
+	margin-right: 5px;
+}
+.collapsed-list .cl-closed UL {
+	display:none;
+}
+.collapsed-list .cl-selected > A {
+	font-weight: bold;
+}

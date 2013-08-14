@@ -1,0 +1,46 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var stdClass $tree
+ * @var string $class
+ * @var bool $implementation
+ * @var bool $inheritance
+ * @var bool $children
+ */
+
+
+echo '<li><a href="'.$this->url->getApiUrl($class).'">'.$class.'</a>';
+
+if($inheritance && isset($tree->inheritance[$class]))
+{
+	echo ' <span>extends ';
+	echo stripos($tree->inheritance[$class], 'phalcon')===0
+		? $this->tag->linkToApi($tree->inheritance[$class])
+		: $tree->inheritance[$class];
+	echo '</span>';
+}
+
+if($implementation && isset($tree->implementation[$class]))
+{
+	echo ' <span>implements ';
+	$interfaces = [];
+	foreach($tree->implementation[$class] as $interface)
+	{
+		$interfaces[] = stripos($interface, 'phalcon')===0
+			? $this->tag->linkToApi($interface)
+			: $interface;
+	}
+	echo join(', ', $interfaces), '</span> ';
+}
+
+if($children)
+{
+	$this->view->partial('classes-list-children', [
+		'parent'         => $class,
+		'inheritance'    => $inheritance,
+		'implementation' => $implementation,
+	]);
+}
+
+echo '</li>';

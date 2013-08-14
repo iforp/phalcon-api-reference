@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<?=\Phalcon\Tag::getTitle()?>
+
+	<meta name="description" content="Phalcon is a web framework delivered as a C extension providing high performance and lower resource consumption"/>
+
+	<link href='http://fonts.googleapis.com/css?family=Ubuntu&amp;subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="all" href="<?=$this->url->get('assets/css/style.css')?>"/>
+	<link rel="stylesheet" type="text/css" media="all" href="<?=$this->url->get('assets/css/tomorrow-night.css')?>">
+
+	<?php $this->assets->outputCss() ?>
+
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="<?=$this->url->get('assets/plugins/select2-3.4.1/select2.min.js')?>"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="<?=$this->url->get('assets/plugins/select2-3.4.1/select2.css')?>"/>
+	<script src="<?=$this->url->get('assets/plugins/jquery.simpletitle/jquery.simpletitle.js')?>"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="<?=$this->url->get('assets/plugins/jquery.simpletitle/jquery.simpletitle.css')?>"/>
+
+</head>
+<body>
+
+<div class="wrapper">
+
+	<div class="size-wrap">
+
+		<div class="header">
+			<a class="header-logo" href="/"><span class="logo-text">Phalcon</span></a>
+
+			<div class="header-right">
+				<iframe src="http://ghbtns.com/github-btn.html?user=phalcon&amp;repo=cphalcon&amp;type=watch&amp;count=true&amp;size=large"
+				        allowtransparency="true" frameborder="0" scrolling="0" width="152px" height="30px"></iframe>
+			</div>
+
+			<ul class="header-nav">
+				<li><a class="header-nav-link" href="http://phalconphp.com/download">Download</a></li>
+				<li><a target="_blank" class="header-nav-link" href="http://docs.phalconphp.com/en/latest/index.html">Documentation</a></li>
+				<li><a target="_blank" class="header-nav-link" href="http://forum.phalconphp.com/">Forum</a></li>
+				<li><a target="_blank" class="header-nav-link" href="http://blog.phalconphp.com/">Blog</a></li>
+				<li><a class="header-nav-link" href="http://phalconphp.com/support">Support</a></li>
+				<li><a class="header-nav-link" href="http://phalconphp.com/donate">Donate</a></li>
+				<li><a target="_blank" class="header-nav-link" href="http://store.phalconphp.com/">Store</a></li>
+				<li><a target="_blank" class="header-nav-link" href="https://github.com/phalcon/cphalcon">GitHub</a></li>
+			</ul>
+
+		</div>
+
+	</div>
+
+	<div class="header-line">
+		<div class="size-wrap">
+			<h1 class="header-line-title title-white">Phalcon API Reference</h1>
+		</div>
+	</div>
+
+	<?=$this->getContent()?>
+
+	<div class="size-wrap footer-wrap">
+
+		<table class="footer-links">
+			<tbody><tr>
+				<td>
+					<div class="footer-links-title">Main</div>
+					<ul class="footer-links-list unstyled">
+						<li><a class="link-black" href="/download">Download</a></li>
+						<li><a href="http://docs.phalconphp.com/en/latest/index.html" class="link-black">Documentation</a></li>
+						<li><a href="http://blog.phalconphp.com/" class="link-black">Blog</a></li>
+					</ul>
+				</td>
+				<td>
+					<div class="footer-links-title">Services</div>
+					<ul class="footer-links-list unstyled">
+						<li><a class="link-black" href="/consulting">Consulting</a></li>
+						<li><a class="link-black" href="/hosting">Hosting</a></li>
+						<li><a class="link-black" href="/support">Support</a></li>
+
+					</ul>
+				</td>
+				<td>
+					<div class="footer-links-title">Support</div>
+					<ul class="footer-links-list unstyled">
+						<li><a class="link-black" href="http://forum.phalconphp.com/">Forum / Community</a></li>
+						<li><a class="link-black" href="http://stackoverflow.com/questions/tagged/phalcon">Stack Overflow</a></li>
+						<li><a class="link-black" href="https://github.com/phalcon/cphalcon/issues">Issue Tracker</a></li>
+					</ul>
+				</td>
+				<td>
+					<div class="footer-links-title">Get Involved</div>
+					<ul class="footer-links-list unstyled">
+						<li><a class="link-black" href="/team">Team</a></li>
+						<li><a class="link-black" href="/about">About</a></li>
+						<li><a class="link-black" href="/roadmap">Roadmap</a></li>
+					</ul>
+				</td>
+			</tr>
+			</tbody></table>
+
+		<div class="donate-wrap">
+			Donate to Phalcon: <a class="button button-small orange" target="_blank" href="http://flattr.com/thing/1134206/Phalcon-PHP-Framework">Flattr</a>
+			or
+			<form target="_blank" style="display: inline" method="post" action="https://www.paypal.com/cgi-bin/webscr">
+				<input type="hidden" value="_s-xclick" name="cmd">
+				<input type="hidden" value="7LSYMNMFZNG8W" name="hosted_button_id">
+				<input type="submit" title="PayPal &mdash; The safer, easier way to pay online." value="via Paypal" style="border: inherit; display: inline; font-weight: bold" class="button button-small orange">
+			</form>
+		</div>
+
+		<div class="social-links">
+			<a class="social-link tw" href="https://twitter.com/phalconphp" target="_blank">Twitter</a>
+			<a class="social-link fb" href="http://www.facebook.com/pages/Phalcon/134230726685897" target="_blank">Facebook</a>
+			<a class="social-link gp" href="https://plus.google.com/102376109340560896457" target="_blank">Google Plus</a>
+			<a class="social-link vm" href="http://vimeo.com/phalconphp" target="_blank">Vimeo</a>
+		</div>
+
+	</div>
+
+</div>
+
+<?php $this->assets->outputJs() ?>
+<script src="http://static.phalconphp.com/js/highlight.pack.js"></script>
+
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var stdClass $tree
+ * @var string $parent
+ * @var bool $implementation
+ * @var bool $inheritance
+ */
+
+
+$list = array_keys($tree->inheritance, $parent);
+sort($list, SORT_STRING|SORT_FLAG_CASE);
+
+if(empty($list))
+{
+	return;
+}
+
+echo '<ul>';
+foreach($list as $class)
+{
+	$this->view->partial('classes-list-item', [
+		'class'          => $class,
+		'implementation' => $implementation,
+		'inheritance'    => $inheritance,
+		'children'       => true
+	]);
+}
+echo '</ul>';

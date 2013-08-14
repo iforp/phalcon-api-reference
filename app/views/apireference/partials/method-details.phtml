@@ -1,0 +1,53 @@
+<div id="<?=$method->name?>-details">
+	<?php if($method->line) { ?>
+		<?=$this->tag->linkToGit([$class->file, 'source', 'class'=>'git-line'], $version, $method->line)?>
+	<?php } ?>
+
+	<h3>
+		<?=$method->name?>
+		<a class="anchor" href="#<?=$method->name?>-details">¶</a>
+	</h3>
+
+
+	<code class="synopsis">
+		<?=$this->partial('method-synopsis', ['method'=>$method])?>
+	</code>
+
+	<?php if($method->docs) { ?>
+		<div class="description">
+			<?=$this->filter->sanitize($method->docs, ['docs', 'apiLinks'])?>
+		</div>
+	<?php } ?>
+
+
+	<?php if($method->arguments->count()) { ?>
+		<div class="method-arguments">
+			<h4>Arguments</h4>
+			<ul>
+			<?php foreach($method->getArguments(['order'=>'ordering']) as $arg) { ?>
+				<li>
+					<var>$<?=$arg->name?></var>
+					<span class="src-type"><?=$this->filter->sanitize($arg->type, 'apiLinks')?></span>
+					<?=$this->filter->sanitize($arg->description, ['docs', 'apiLinks'])?>
+				</li>
+			<?php } ?>
+			</ul>
+		</div>
+	<?php } ?>
+
+	<?php if($method->returns) { ?>
+		<div class="method-returns">
+			<h4>Returns</h4>
+			<ul><li>
+				<span class="src-type">
+					<?=$this->filter->sanitize($method->returns, 'apiLinks')?>
+				</span>
+				<?=$this->filter->sanitize($method->returns_docs, 'apiLinks')?>
+			</li></ul>
+		</div>
+	<?php } ?>
+
+	<?php if($method->example) { ?>
+		<p><?=$this->tag->code($method->example)?></p>
+	<?php } ?>
+</div>

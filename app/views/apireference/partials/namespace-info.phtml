@@ -1,0 +1,58 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var stdClass $namespace
+ */
+?>
+<span id="namespaces-summary"></span>
+
+<?=(isset($class) ? '<h2>Namespace information <a class="anchor" href="#namespaces-summary">¶</a></h2>':'')?>
+
+<?php if(!empty($namespace->namespaces)) { ?>
+<div class="section">
+	<h3>Namespaces summary</h3>
+	<ul>
+		<?php foreach($namespace->namespaces as $ns) {
+			$this->view->partial('classes-list-item', [
+				'class'          => "$namespace->name\\$ns",
+				'implementation' => false,
+				'inheritance'    => false,
+				'children'       => false
+			]);
+		} ?>
+	</ul>
+</div>
+<?php } ?>
+
+<?php if(!empty($namespace->classes)) { ?>
+<div class="section">
+	<h3>Classes summary</h3>
+	<ul>
+		<?php foreach($namespace->classes as $class) {
+			$this->view->partial('classes-list-item', [
+				'class'          => "$namespace->name\\$class",
+				'implementation' => true,
+				'inheritance'    => true,
+				'children'       => false
+			]);
+		} ?>
+	</ul>
+</div>
+<?php } ?>
+
+<?php if(!empty($namespace->interfaces)) { ?>
+<div class="section">
+	<h3>Interfaces summary</h3>
+	<ul>
+		<?php foreach($namespace->interfaces as $interface) {
+			$this->view->partial('classes-list-item', [
+				'class'          => "$namespace->name\\$interface",
+				'implementation' => true,
+				'inheritance'    => true,
+				'children'       => false
+			]);
+		} ?>
+	</ul>
+</div>
+<?php } ?>

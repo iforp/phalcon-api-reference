@@ -1,0 +1,7 @@
+<div class="content-header">
+	<small class="gray"><?=ucfirst($type)?></small>
+	<h1><?=$name?></h1>
+</div>
+
+<?php if(isset($class)) $this->view->partial('class-info'); ?>
+<?php if(!empty($namespace->namespaces) || !empty($namespace->classes) || !empty($namespace->interfaces)) $this->view->partial('namespace-info'); ?>

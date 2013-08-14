@@ -1,0 +1,32 @@
+<?php
+$printList = function($ns, $selected) use(&$printList, $tree)
+{
+	$arr = array_unique(array_merge(
+		$tree->structure[$ns]->namespaces,
+		$tree->structure[$ns]->interfaces,
+		$tree->structure[$ns]->classes
+	));
+	sort($arr, SORT_STRING|SORT_FLAG_CASE);
+
+	echo "<ul>";
+
+	foreach($arr as $name)
+	{
+		$namespace = $tree->structure[$ns]->name.'\\'.$name;
+		$class     = $selected == $namespace ? 'cl-selected' : '';
+		echo "<li class=\"$class\">" , $this->tag->linkToApi([$namespace, $name]);
+		if(isset($tree->structure[$namespace]))
+		{
+			$printList($namespace, $selected);
+		}
+		echo '</li>';
+	}
+
+	echo "</ul>";
+};
+?>
+
+<div id="tree">
+	<?=$this->tag->linkToApi('Phalcon')?>
+	<?php $printList('Phalcon', isset($name) ? $name : null) ?>
+</div>

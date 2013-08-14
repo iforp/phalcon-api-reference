@@ -1,0 +1,44 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var string $lang
+ * @var string $version
+ * @var string|null $summary
+ */
+
+// some php code to keep template clean
+$urls        = [];
+$tabsClasses = [];
+foreach(['classes', 'namespaces', 'interfaces', 'changelog'] as $type)
+{
+	$urls[$type] = $this->url->get([
+		'for'      => 'showSummary',
+		'type'     => $type,
+		'language' => $language,
+		'version'  => $version,
+	]);
+	$tabsClasses[$type] = (isset($summary) && $summary == $type ? 'active' : '');
+}
+?>
+
+<div class="size-wrap clear-fix">
+	<div class="sidebar">
+		<?=$this->partial('quick-search')?>
+		<?=$this->partial('classes-structure')?>
+	</div>
+
+	<div class="content">
+		<div style="float:left">
+			<?=$this->partial('version-select')?>
+		</div>
+		<ul class="tabs clear-fix" style="margin-top:0;" data-for="tabs-content">
+			<li><a href="<?=$urls['classes']?>"    class="tab-link <?=$tabsClasses['classes']?>"><u>Classes</u></a></li>
+			<li><a href="<?=$urls['namespaces']?>" class="tab-link <?=$tabsClasses['namespaces']?>"><u>Namespaces</u></a></li>
+			<li><a href="<?=$urls['interfaces']?>" class="tab-link <?=$tabsClasses['interfaces']?>"><u>Interfaces</u></a></li>
+			<li><a href="<?=$urls['changelog']?>"  class="tab-link <?=$tabsClasses['changelog']?>"><u>Changelog</u></a></li>
+		</ul>
+
+		<?=$this->getContent()?>
+	</div>
+</div>

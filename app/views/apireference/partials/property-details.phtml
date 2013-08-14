@@ -1,0 +1,51 @@
+<div id="$<?=$property->name?>-details">
+
+	<?php if($property->line) { ?>
+		<?=$this->tag->linkToGit([$class->file, 'source', 'class'=>'git-line'], $version, $property->line)?>
+	<?php } ?>
+
+	<h3>
+		<?=$property->name?>
+		<a class="anchor" href="#$<?=$property->name?>-details">¶</a>
+	</h3>
+
+	<code class="synopsis">
+		<?=$this->partial('property-synopsis', ['property'=>$property])?>
+	</code>
+
+	<?php if($property->docs) { ?>
+		<div class="description">
+			<?=$this->filter->sanitize($property->docs, ['docs', 'apiLinks'])?>
+		</div>
+	<?php } ?>
+
+
+	<?php if($property->getter || $property->setter) { ?>
+		<div class="property-getter-setter">
+			<ul>
+				<?php if($property->getter) { ?>
+					<li>
+						<strong>Getter</strong>
+						<code>
+							<span class="src-type"><?=$property->type?></span>
+							<span class="src-name"><?=$property->getter?></span> ( )
+						</code>
+					</li>
+				<?php } ?>
+				<?php if($property->setter) { ?>
+					<li>
+						<strong>Setter</strong>
+						<code>
+							<span class="src-type">void</span>
+							<span class="src-name"><?=$property->setter?></span>
+							(
+								<span class="src-type"><?=$property->type?></span>
+								<var>$value</var>
+							)
+						</code>
+					</li>
+				<?php } ?>
+			</ul>
+		</div>
+	<?php } ?>
+</div>

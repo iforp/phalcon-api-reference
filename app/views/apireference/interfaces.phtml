@@ -1,0 +1,21 @@
+<?php
+/**
+ * These variables must be defined
+ * (passed as array of variables with partial call or be defined with view->setVar)
+ * @var stdClass $tree
+ */
+?>
+<ul class="classes-list-tree">
+	<?php
+	foreach($tree->list as $interface => $type)
+	{
+		if($type != 'interface') continue;
+		$this->view->partial('classes-list-item', [
+			'class'          => $interface,
+			'implementation' => false,
+			'inheritance'    => true,
+			'children'       => false
+		]);
+	}
+	?>
+</ul>

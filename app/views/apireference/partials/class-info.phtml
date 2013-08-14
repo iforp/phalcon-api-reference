@@ -1,0 +1,236 @@
+
+<ul class="content-nav">
+	<?php if($class->constants->count()) { ?>
+		<li><a href="#constants-summary">Constants</a></li>
+	<?php } ?>
+	<?php if($class->properties->count()) { ?>
+		<li><a href="#properties-summary">Properties</a></li>
+	<?php } ?>
+	<?php if($class->methods->count()) { ?>
+		<li><a href="#methods-summary">Methods</a></li>
+	<?php } ?>
+	<?php if(!empty($namespace->namespaces) || !empty($namespace->classes) || !empty($namespace->interfaces)) { ?>
+		<li><a href="#namespaces-summary">Namespaces</a></li>
+	<?php } ?>
+</ul>
+
+<div class="summary section">
+	<table class="api-table">
+
+		<tr>
+			<th>Namespace</th>
+			<td><?=$this->tag->linkToApi($class->namespace)?></td>
+		</tr>
+
+		<?php if($class->extends) { ?>
+		<tr>
+			<th>Extends</th>
+			<td><?=$this->filter->sanitize($class->extends, 'apiLinks')?></td>
+		</tr>
+		<?php } ?>
+
+		<?php if($class->implements) { ?>
+		<tr>
+			<th>Implements</th>
+			<td><?=$this->filter->sanitize(str_replace(',', '<br/>', $class->implements), 'apiLinks')?></td>
+		</tr>
+		<?php } ?>
+
+		<?php if(!empty($subclasses)) { ?>
+		<tr>
+			<th>Direct&nbsp;subclasses</th>
+			<td>
+				<?=$this->filter->sanitize(join('<br/>', $subclasses), 'apiLinks')?>
+			</td>
+		</tr>
+		<?php } ?>
+
+		<tr>
+			<th>Source</th>
+			<td>
+				<?=$this->tag->linkToGit($class->file)?>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<?php if($class->docs) {
+	?>
+	<div class="description section">
+		<?=$this->filter->sanitize($class->docs, ['docs', 'apiLinks'])?>
+	</div>
+<?php } ?>
+
+
+<?php if($class->example) { ?>
+	<div class="example section">
+		<?=$this->tag->code($class->example)?>
+	</div>
+<?php } ?>
+
+
+<div class="details">
+	<code class="synopsis" style="display: none">
+		<?=$this->partial('class-synopsis', ['class'=>$class])?>
+	</code>
+	<span class="button green show-synopsis">Show class synopsis</span>
+</div>
+
+
+
+<?php if($class->constants->count()) { ?>
+	<div id="constants-summary" class="section">
+		<h2>Constants summary <a class="anchor" href="#constants-summary">¶</a></h2>
+		<table class="api-table">
+			<tbody>
+			<?php foreach($class->constants as $i => $constant) { ?>
+				<tr>
+					<td>
+						<span class="src-type">
+							<?=$constant->type?>
+						</span>
+					</td>
+					<td>
+						<span class="src-name"><?=$constant->name?></span>
+					</td>
+					<td class="align-center"><?=$constant->value?></td>
+					<td><?=$this->filter->sanitize($constant->docs, ['docs', 'apiLinks'])?></td>
+				</tr>
+			<?php } ?>
+			</tbody>
+		</table>
+	</div>
+<?php } ?>
+
+<?php if($class->properties->count()) { ?>
+	<div id="properties-summary" class="section">
+		<h2>
+			Properties summary
+			<a class="anchor" href="#properties-summary">¶</a>
+			<span class="button button-small">
+				<span>Hide</span>
+				<span style="display:none">Show</span>
+				inherited properties
+			</span>
+		</h2>
+
+		<table class="api-table summary">
+			<tbody>
+			<?php foreach($class->properties as $property) {
+				$href = "#\${$property->name}-details";
+				if($property->defined_by != $name)
+					$href = $this->url->getApiUrl($property->defined_by) . $href;
+				$pointTitle   = $property->visibility . ($property->is_static?' static':'');
+			?>
+				<tr class="<?=($property->defined_by!=$name?'inherited':'')?>">
+					<td>
+						<div class="point <?=$property->visibility?>" title="<?=$pointTitle?>"></div>
+					</td>
+					<td>
+						<span class="src-type">
+							<?=$this->filter->sanitize($property->type, 'apiLinks')?>
+						</span>
+					</td>
+					<td>
+						<a href="<?=$href?>">$<?=$property->name?></a>
+					</td>
+					<td>
+						<?=$this->filter->sanitize($property->docs, ['docs', 'apiLinks'])?>
+					</td>
+				</tr>
+			<?php } ?>
+			</tbody>
+		</table>
+	</div>
+<?php } ?>
+
+
+
+<?php if($class->methods->count()) { ?>
+	<div id="methods-summary" class="section">
+		<h2>
+			Methods summary
+			<a class="anchor" href="#methods-summary">¶</a>
+			<span class="button button-small">
+				<span>Hide</span>
+				<span style="display:none">Show</span>
+				inherited methods
+			</span>
+		</h2>
+
+		<table class="api-table summary">
+		<?php foreach($class->methods as $method) {
+			$href = "#{$method->name}-details";
+			if($method->defined_by != $name)
+				$href = $this->url->getApiUrl($method->defined_by) . $href;
+			$pointTitle  = '';
+			$pointTitle .= $method->is_final?'final ':'';
+			$pointTitle .= $method->is_abstract?'abstract ':'';
+			$pointTitle .= $method->visibility;
+			$pointTitle .= $method->is_static?' static':'';
+		?>
+			<tr class="<?=($method->defined_by!=$name?'inherited':'')?>">
+				<td>
+					<div class="point <?=$method->visibility?>" title="<?=$pointTitle?>"></div>
+				</td>
+				<td>
+					<span class="src-type">
+						<?=$this->filter->sanitize($method->returns, 'apiLinks')?>
+					</span>
+				</td>
+				<td>
+					<a href="<?=$href?>"><?=$method->name?>&nbsp;(&nbsp;)</a>
+				</td>
+				<td>
+					<?=$this->filter->sanitize($method->docs, ['docs', 'apiLinks'])?>
+				</td>
+			</tr>
+		<?php } ?>
+		</table>
+	</div>
+<?php } ?>
+
+
+<?php if($class->properties->count()) { ?>
+	<div id="properties-details" class="section details">
+		<h2>Properties details <a class="anchor" href="#properties-details">¶</a></h2>
+		<?php foreach($class->properties as $property) {
+			if($property->defined_by != $name) continue;
+			$this->partial('property-details', ['property'=>$property, 'useLink'=>false]);
+		} ?>
+	</div>
+<?php } ?>
+
+
+<?php if($class->methods->count()) { ?>
+	<div id="methods-details" class="section details">
+		<h2>Methods details <a class="anchor" href="#methods-details">¶</a></h2>
+		<?php foreach($class->methods as $method) {
+			if($method->defined_by != $name) continue;
+			$this->partial('method-details', ['method'=>$method, 'useLink'=>false]);
+		} ?>
+	</div>
+<?php } ?>
+
+
+
+<script type="text/javascript">
+	$(function()
+	{
+		$('#properties-summary .button, #methods-summary .button').on('click', function()
+		{
+			$(this).find('span').toggle();
+			$(this).parents('.section').find('.inherited').fadeToggle();
+		});
+
+		$('.show-synopsis').on('click', function()
+		{
+			$(this)
+				.fadeOut()
+				.prev().slideDown();
+		});
+
+		$('.api-table .point[title]').simpleTitle();
+	});
+</script>

@@ -1,0 +1,57 @@
+
+<div class="class-synopsis">
+	<div class="synopsis-section">
+		<span class="src-comment">// <?=ucfirst($type)?> <?=$class->namespace?>\<?=$class->name?> synopsis</span><br/>
+		<span class="src-comment">// C-source located in file <?=$this->tag->linkToGit($class->file)?></span>
+	</div>
+
+	<div class="synopsis-section">
+		<span class="src-modifier">namespace</span>
+		<span class="src-type"><?=$this->tag->linkToApi($class->namespace)?>;</span>
+	</div>
+
+	<div class="synopsis-section">
+		<span class="src-modifier"><?=$type?></span>
+		<span class="src-type"><?=$class->name?></span>
+			<?php if($class->extends)    echo '<div>extends <span class="src-type">' . $this->filter->sanitize($class->extends, 'apiLinks') . '</span></div>';?>
+			<?php if($class->implements) echo '<div>implements <span class="src-type">' . str_replace(',', ',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $this->filter->sanitize($class->implements, 'apiLinks')) . '</div>';?>
+	</div>
+	{
+	<?php if($class->constants->count()) { ?>
+		<div class="synopsis-section">
+			<div class="constant-synopsis">
+				<span class="src-comment">/* Constants */</span>
+				<?php foreach($class->constants as $constant) { ?>
+					<div>
+						<span class="src-type"><?=$constant->type?></span>
+						<span class="src-name"><?=$constant->name?></span>
+						= <?=$constant->value?>;
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+	<?php } ?>
+
+	<?php if($class->properties->count()) { ?>
+		<div class="synopsis-section">
+			<div>
+				<span class="src-comment">/* Properties */</span>
+				<?php foreach($class->properties as $property) {
+					$this->partial('property-synopsis', ['property'=>$property, 'useLink'=>true]);
+				} ?>
+			</div>
+		</div>
+	<?php } ?>
+
+	<?php if($class->methods->count()) { ?>
+		<div class="synopsis-section">
+			<div>
+				<span class="src-comment">/* Methods */</span>
+				<?php foreach($class->methods as $method) {
+					$this->partial('method-synopsis', ['method'=>$method, 'useLink'=>true]);
+				} ?>
+			</div>
+		</div>
+	<?php } ?>
+	}
+</div>
