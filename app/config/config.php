@@ -2,7 +2,7 @@
 
 return array
 (
-	'baseUri'       => '/api/',
+	'baseUri'       => '/',
 	'defaultLang'   => 'en',
 	'baseGithubUrl' => 'https://github.com/phalcon/cphalcon/tree',
 	'fileGithubUrl' => 'https://github.com/phalcon/cphalcon/blob/%s/ext/%s',
