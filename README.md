@@ -5,6 +5,8 @@ This application was developed using the Phalcon.
 
 Backend part is console app which parse the Phalcon C-sources to generate API docs.
 
+[Demo](http://phalcon.agent-j.ru/)
+
 ###Restrictions
 - generator uses PHP ReflectionClass, so its possible to generate API only for currently installed Phalcon version
 - there are no default values for methods arguments
