@@ -71,7 +71,7 @@ class ApiGenerator extends \Phalcon\Mvc\User\Component
 			{
 				$started = true;
 			}
-			elseif($started && preg_match('/add_next_index_long\(version, (\d+)\)/', $line, $matches))
+			elseif($started && preg_match('/add_next_index_long\(\w+, (\d+)\)/', $line, $matches))
 			{
 				$version[] = $matches[1];
 			}
