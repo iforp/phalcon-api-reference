@@ -1,3 +1,5 @@
+**This app is deprecated**
+
 Phalcon PHP API reference application
 =====================================
 
